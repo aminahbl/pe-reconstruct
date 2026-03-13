@@ -9,7 +9,10 @@ const { hasComments = false, hasReferences = false }: Props = Astro.props;
 
 <div class="reader-controls" data-reader-controls>
   <fieldset class="reader-controls__group">
-    <legend class="reader-controls__legend">Language</legend>
+    <legend class="reader-controls__legend">
+      <span>Language</span>
+      <kbd class="reader-controls__kbd">L</kbd>
+    </legend>
     <div class="reader-controls__options">
       <label class="reader-controls__option">
         <input
@@ -43,6 +46,7 @@ const { hasComments = false, hasReferences = false }: Props = Astro.props;
       >
         <input type="checkbox" data-reference-input disabled={!hasReferences} />
         <span>Segment references</span>
+        <kbd class="reader-controls__kbd">R</kbd>
       </label>
       <label
         class:list={{
@@ -52,10 +56,12 @@ const { hasComments = false, hasReferences = false }: Props = Astro.props;
       >
         <input type="checkbox" data-comment-input disabled={!hasComments} />
         <span>Comments</span>
+        <kbd class="reader-controls__kbd">C</kbd>
       </label>
       <label class="reader-controls__option">
         <input type="checkbox" data-layout-input checked />
         <span>Single-column bilingual</span>
+        <kbd class="reader-controls__kbd">V</kbd>
       </label>
     </div>
   </fieldset>

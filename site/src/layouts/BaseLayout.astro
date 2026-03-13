@@ -23,6 +23,27 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      const params = new URLSearchParams(window.location.search);
+      const language = params.get("lang");
+      const layout = params.get("layout");
+      const root = document.documentElement;
+      const showRefs = params.get("refs");
+      const showComments = params.get("comments");
+
+      root.dataset.readerLanguage = "en";
+
+      if (language === "pli" || language === "both") {
+        root.dataset.readerLanguage = language;
+      }
+
+      root.dataset.readerShowRefs =
+        showRefs === "1" || showRefs === "true" ? "true" : "false";
+      root.dataset.readerShowComments =
+        showComments === "1" || showComments === "true" ? "true" : "false";
+      root.dataset.readerBilingualLayout =
+        layout === "split" ? "split" : "stacked";
+    </script>
   </head>
   <body class={bodyClass}>
     <slot />

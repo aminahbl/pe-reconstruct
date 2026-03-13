@@ -5,7 +5,6 @@ lib/.precomp
 
 # personal additions
 .DS_store
-reconst/*.json
 miscdev
 
 # JSON files frequently generated in /reconst for testing

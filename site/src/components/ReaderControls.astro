@@ -1,0 +1,66 @@
+---
+interface Props {
+  hasComments?: boolean;
+  hasReferences?: boolean;
+}
+
+const { hasComments = false, hasReferences = false }: Props = Astro.props;
+---
+
+<div class="reader-controls" data-reader-controls>
+  <fieldset class="reader-controls__group">
+    <legend class="reader-controls__legend">Language</legend>
+    <div class="reader-controls__options">
+      <label class="reader-controls__option">
+        <input
+          type="radio"
+          name="language"
+          value="en"
+          checked
+          data-language-input
+        />
+        <span>English</span>
+      </label>
+      <label class="reader-controls__option">
+        <input type="radio" name="language" value="pli" data-language-input />
+        <span>Pali</span>
+      </label>
+      <label class="reader-controls__option">
+        <input type="radio" name="language" value="both" data-language-input />
+        <span>Both</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset class="reader-controls__group">
+    <legend class="reader-controls__legend">Display</legend>
+    <div class="reader-controls__options">
+      <label
+        class:list={{
+          "reader-controls__option": true,
+          "reader-controls__option--disabled": !hasReferences,
+        }}
+      >
+        <input type="checkbox" data-reference-input disabled={!hasReferences} />
+        <span>Segment references</span>
+      </label>
+      <label
+        class:list={{
+          "reader-controls__option": true,
+          "reader-controls__option--disabled": !hasComments,
+        }}
+      >
+        <input type="checkbox" data-comment-input disabled={!hasComments} />
+        <span>Comments</span>
+      </label>
+      <label class="reader-controls__option">
+        <input type="checkbox" data-layout-input />
+        <span>Single-column bilingual</span>
+      </label>
+    </div>
+  </fieldset>
+</div>
+
+<script>
+  import "../scripts/reader-controls";
+</script>

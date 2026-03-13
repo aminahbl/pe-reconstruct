@@ -1,0 +1,206 @@
+[data-reader-root] {
+  --reader-column-gap: var(--space-5);
+}
+
+.reader-header {
+  display: grid;
+  margin-bottom: var(--space-5);
+}
+
+.reader-title {
+  line-height: 1.15;
+  margin: 0;
+  margin-top: var(--space-2);
+}
+
+.reader-controls {
+  align-items: start;
+  background: var(--color-surface-strong);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .reader-controls {
+    grid-template-columns: repeat(2, minmax(0, auto));
+    justify-content: space-between;
+  }
+}
+
+.reader-controls__group {
+  border: 0;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
+}
+
+.reader-controls__legend {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+}
+
+.reader-controls__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.reader-controls__option {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-2);
+}
+
+.reader-controls__option--disabled {
+  color: var(--color-text-muted);
+}
+
+.reader-body {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.reader-column {
+  min-width: 0;
+}
+
+[data-reader-root] .reader-column--both {
+  display: none;
+}
+
+[data-reader-root][data-language="en"] .reader-column--pli,
+[data-reader-root][data-language="en"] .reader-column--both,
+[data-reader-root][data-language="pli"] .reader-column--en,
+[data-reader-root][data-language="pli"] .reader-column--both {
+  display: none;
+}
+
+[data-reader-root][data-language="both"] .reader-body {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+[data-reader-root][data-language="both"][data-bilingual-layout="stacked"]
+  .reader-column--en,
+[data-reader-root][data-language="both"][data-bilingual-layout="stacked"]
+  .reader-column--pli {
+  display: none;
+}
+
+[data-reader-root][data-language="both"][data-bilingual-layout="stacked"]
+  .reader-column--both {
+  display: block;
+}
+
+@media (min-width: 72rem) {
+  [data-reader-root][data-language="both"][data-bilingual-layout="split"]
+    .reader-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--reader-column-gap);
+  }
+}
+
+.segment {
+  display: inline;
+  margin: 0;
+}
+
+.segment__text {
+  display: inline;
+  min-width: 0;
+}
+
+.segment--pli .segment__text {
+  color: var(--color-text-second);
+}
+
+.reader-column--both .segment-pair {
+  display: block;
+}
+
+.reader-column--both .segment {
+  display: block;
+}
+
+.reader-column--both .segment--pli {
+  margin-top: var(--space-1);
+}
+
+.segment__reference,
+.segment__comment,
+.segment__gap {
+  color: var(--color-text-muted);
+  display: none;
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  margin-inline-start: var(--space-1);
+}
+
+.segment__reference {
+  vertical-align: super;
+}
+
+.segment__comment {
+  font-style: italic;
+}
+
+.segment__gap {
+  white-space: nowrap;
+}
+
+[data-reader-root][data-show-refs="true"] .segment__reference {
+  display: inline;
+}
+
+[data-reader-root][data-show-comments="true"] .segment__comment {
+  display: inline;
+}
+
+[data-reader-root][data-show-comments="true"] .segment__comment::before {
+  content: " [";
+}
+
+[data-reader-root][data-show-comments="true"] .segment__comment::after {
+  content: "]";
+}
+
+.reader-column[id^="dn"] {
+  display: block;
+}
+
+.reader-column[id^="dn"] ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.reader-column[id^="dn"] p,
+.reader-column[id^="dn"] blockquote,
+.reader-column[id^="dn"] li {
+  margin: 0;
+}
+
+.reader-column[id^="dn"] p + p,
+.reader-column[id^="dn"] p + ul,
+.reader-column[id^="dn"] ul + p,
+.reader-column[id^="dn"] blockquote + p,
+.reader-column[id^="dn"] h2 + p,
+.reader-column[id^="dn"] h3 + p {
+  margin-top: var(--space-2);
+}
+
+.reader-column[id^="dn"] blockquote {
+  margin-inline: 0;
+  margin-block: var(--space-4);
+  padding-inline-start: var(--space-6);
+}
+
+.reader-column[id^="dn"] .verse-line {
+  display: block;
+}

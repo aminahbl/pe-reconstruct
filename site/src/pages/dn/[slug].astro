@@ -1,0 +1,96 @@
+---
+import "../../styles/reader.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ReaderControls from "../../components/ReaderControls.astro";
+import { composeSutta } from "../../lib/compose";
+import { getAllSuttas, getSutta } from "../../lib/reconst";
+
+export const getStaticPaths = () => {
+  return getAllSuttas().map((sutta) => ({
+    params: { slug: sutta.slug },
+  }));
+};
+
+const { slug } = Astro.params;
+const currentSutta = getSutta(slug);
+
+if (!currentSutta) {
+  throw new Error(`Unknown sutta: ${slug}`);
+}
+
+const NIKAYA_ID = "DN";
+
+const composedSutta = composeSutta(currentSutta);
+const pageTitle = `${NIKAYA_ID} ${composedSutta.number} · ${composedSutta.displayTitle}`;
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={`${composedSutta.collectionTitle} · ${composedSutta.displayTitle}`}
+>
+  <main class="site-shell">
+    <div
+      class="reader-main surface-card"
+      data-reader-root
+      data-language="en"
+      data-show-refs="false"
+      data-show-comments="false"
+      data-bilingual-layout="split"
+    >
+      <reader-controls-panel>
+        <ReaderControls
+          hasComments={composedSutta.hasComments}
+          hasReferences={composedSutta.hasReferences}
+        />
+      </reader-controls-panel>
+
+      <div class="back-link-row">
+        <a class="back-link" href={baseUrl}>← All texts</a>
+        <span>{NIKAYA_ID} {composedSutta.number} </span>
+      </div>
+
+      <article class="reader-article">
+        <header class="reader-header">
+          <p class="site-meta">
+            {composedSutta.collectionTitle}
+          </p>
+          <h1 class="reader-title">
+            {composedSutta.displayTitle}
+          </h1>
+          {
+            composedSutta.paliTitle ? (
+              <p class="site-subtitle">{composedSutta.paliTitle}</p>
+            ) : null
+          }
+        </header>
+
+        <div class="reader-body">
+          <section
+            id={`${composedSutta.slug}-en`}
+            class="reader-column reader-column--en"
+            data-reader-column="en"
+            lang="en"
+          >
+            <Fragment set:html={composedSutta.renderedEnglishHtml} />
+          </section>
+          <section
+            id={`${composedSutta.slug}-pli`}
+            class="reader-column reader-column--pli"
+            data-reader-column="pli"
+            lang="pi"
+          >
+            <Fragment set:html={composedSutta.renderedPaliHtml} />
+          </section>
+          <section
+            id={`${composedSutta.slug}-both`}
+            class="reader-column reader-column--both"
+            data-reader-column="both"
+          >
+            <Fragment set:html={composedSutta.renderedBilingualHtml} />
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

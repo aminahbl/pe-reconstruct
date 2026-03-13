@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAllSuttas } from "../lib/reconst";
+
+const suttas = getAllSuttas();
+const baseUrl = import.meta.env.BASE_URL;
+
+const NIKAYA_ID = "DN";
+---
+
+<BaseLayout
+  title="Dīgha Nikāya Peyyāla Reconstructions"
+  description="Read reconstructed DN texts with English, Pali, references, and comments in a light publication interface."
+>
+  <main class="site-shell index">
+    <header class="site-header">
+      <h1 class="site-title">Dīgha Nikāya Peyyāla Reconstructions</h1>
+      <p class="site-description">
+        This is a demo presentation layer for composed Dīgha Nikāya texts with
+        peyyāla reconstructions outputted by the <a
+          href="https://github.com/arkiuat/pe-reconstruct"
+          target="_blank"
+          rel="noopener noreferrer">arkiuat/pe-reconstruct</a
+        > utility. This project is a fork of the original repository that adds a simple
+        website interface for viewing the reconstructed texts. It does not develop
+        the reconstruction automation itself.
+      </p>
+    </header>
+
+    <section class="index-main">
+      <div class="sutta-grid">
+        {
+          suttas.map((sutta) => (
+            <article class="sutta-card">
+              <a
+                class="sutta-card__link"
+                href={`${baseUrl.replace(/\/$/, "")}/dn/${sutta.slug}/`}
+              >
+                <p class="sutta-card__meta">
+                  {NIKAYA_ID} {sutta.number}
+                </p>
+                <h2 class="sutta-card__title">{sutta.displayTitle}</h2>
+                <p class="sutta-card__body">
+                  {sutta.collectionTitle}
+                  {sutta.paliTitle ? ` · ${sutta.paliTitle}` : ""}
+                </p>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>

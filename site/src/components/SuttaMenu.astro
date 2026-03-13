@@ -1,0 +1,33 @@
+---
+import type { Sutta } from "../lib/types";
+
+interface Props {
+  suttas?: Sutta[];
+  currentSlug?: string;
+}
+
+const { suttas = [], currentSlug = "" }: Props = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<nav class="sutta-menu" aria-label="Digha Nikaya texts">
+  <ul class="sutta-menu__list">
+    {
+      suttas.map((sutta) => (
+        <li>
+          <a
+            class:list={{
+              "sutta-menu__link": true,
+              "sutta-menu__link--current": sutta.slug === currentSlug,
+            }}
+            href={`${baseUrl}dn/${sutta.slug}/`}
+            aria-current={sutta.slug === currentSlug ? "page" : undefined}
+          >
+            <span class="sutta-menu__number">DN {sutta.number}</span>
+            <span class="sutta-menu__title">{sutta.displayTitle}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

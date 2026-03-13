@@ -1,0 +1,11 @@
+---
+import type { ComposedSegment } from "../lib/types";
+
+interface Props {
+  segment: ComposedSegment;
+}
+
+const { segment }: Props = Astro.props;
+---
+
+<Fragment set:html={segment.sanitizedTemplate} />

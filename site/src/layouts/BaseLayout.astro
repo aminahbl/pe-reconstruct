@@ -22,87 +22,9 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class={bodyClass}>
     <slot />
-    <div class="site-disclaimer" data-site-disclaimer hidden>
-      <div class="site-disclaimer__backdrop"></div>
-      <div
-        class="site-disclaimer__dialog surface-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="site-disclaimer-title"
-        aria-describedby="site-disclaimer-description"
-      >
-        <p class="site-disclaimer__eyebrow">Hey! 👋</p>
-        <h2 id="site-disclaimer-title" class="site-disclaimer__title">
-          Just to let you know…
-        </h2>
-        <p id="site-disclaimer-description" class="site-disclaimer__body">
-          The reconstructed texts on this site are experimental and may contain
-          errors. They have been built from the output of the <a
-            href="https://github.com/arkiuat/pe-reconstruct"
-            target="_blank"
-            rel="noopener noreferrer">arkiuat/pe-reconstruct</a
-          > project which is a work in progress. Please check the project’s README
-          for its current status and more details.
-        </p>
-        <p class="site-disclaimer__body">Last updated: 2026-03-13</p>
-        <div class="site-disclaimer__actions">
-          <button
-            class="site-disclaimer__button"
-            type="button"
-            data-site-disclaimer-acknowledge
-          >
-            Got it!
-          </button>
-        </div>
-      </div>
-    </div>
-    <script is:inline>
-      const storageKey = "pe-reconstruct:first-visit-disclaimer";
-      const disclaimer = document.querySelector("[data-site-disclaimer]");
-      const acknowledgeButton = document.querySelector(
-        "[data-site-disclaimer-acknowledge]",
-      );
-
-      if (
-        disclaimer instanceof HTMLElement &&
-        acknowledgeButton instanceof HTMLButtonElement
-      ) {
-        const openDisclaimer = () => {
-          disclaimer.hidden = false;
-          document.body.dataset.siteDisclaimerOpen = "true";
-          acknowledgeButton.focus();
-        };
-
-        const closeDisclaimer = () => {
-          disclaimer.hidden = true;
-          delete document.body.dataset.siteDisclaimerOpen;
-        };
-
-        let hasAcknowledged = false;
-
-        try {
-          hasAcknowledged = window.localStorage.getItem(storageKey) === "true";
-        } catch (error) {
-          console.error("Unable to read disclaimer state", { error });
-        }
-
-        if (!hasAcknowledged) {
-          openDisclaimer();
-        }
-
-        acknowledgeButton.addEventListener("click", () => {
-          try {
-            window.localStorage.setItem(storageKey, "true");
-          } catch (error) {
-            console.error("Unable to store disclaimer state", { error });
-          }
-
-          closeDisclaimer();
-        });
-      }
-    </script>
   </body>
 </html>

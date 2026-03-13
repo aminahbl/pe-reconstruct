@@ -8,6 +8,7 @@ html {
   font-family: var(--font-body);
   line-height: 1.6;
   word-break: break-word;
+  scroll-padding-top: var(--space-7);
 }
 
 body {
@@ -199,6 +200,10 @@ textarea {
   border-color: var(--color-border);
 }
 
+.sutta-grid__title {
+  margin-block-end: var(--space-5);
+}
+
 .sutta-grid {
   display: grid;
   gap: var(--space-5);
@@ -236,71 +241,6 @@ textarea {
 }
 
 .sutta-card__body {
+  font-size: var(--text-lead);
   margin: 0 0 var(--space-2);
-}
-
-.site-disclaimer {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: var(--space-4);
-}
-
-.site-disclaimer[hidden] {
-  display: none;
-}
-
-.site-disclaimer__backdrop {
-  position: absolute;
-  inset: 0;
-  background: hsla(25, 23%, 15%, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.site-disclaimer__dialog {
-  position: relative;
-  width: min(100%, 36rem);
-  padding: var(--space-5);
-  display: grid;
-  gap: var(--space-3);
-}
-
-.site-disclaimer__eyebrow {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-family: var(--font-ui);
-  font-size: var(--text-sm);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.site-disclaimer__title {
-  margin: 0;
-}
-
-.site-disclaimer__body {
-  margin: 0;
-}
-
-.site-disclaimer__actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.site-disclaimer__button {
-  justify-self: start;
-  border: 1px solid var(--color-accent-strong);
-  border-radius: var(--radius-md);
-  background: var(--color-accent-strong);
-  color: var(--color-surface);
-  cursor: pointer;
-  font-family: var(--font-ui);
-  padding: var(--space-2) var(--space-4);
-}
-
-.site-disclaimer__button:hover,
-.site-disclaimer__button:focus-visible {
-  background: var(--color-accent-hover);
 }

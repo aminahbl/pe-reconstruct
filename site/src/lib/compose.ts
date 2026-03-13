@@ -24,8 +24,8 @@ const isTitleSegment = (segmentId: string) => /:0\.[12]$/.test(segmentId)
 
 const normalizeText = (value: string) => value.trim()
 
-const renderReference = (segment: Segment) => {
-  return `<span class="segment__reference" data-segment-reference="${escapeAttribute(segment.segmentId)}">${escapeText(segment.segmentNumber)}</span>`
+const renderReference = (segmentId: string, elementId: string, segmentNumber: string) => {
+  return `<a class="segment__reference" data-segment-reference="${segmentId}" href="#${elementId}">${segmentNumber}</a>`
 }
 
 const renderComment = (segment: Segment, language: Exclude<LanguageMode, "both">) => {
@@ -37,7 +37,7 @@ const renderComment = (segment: Segment, language: Exclude<LanguageMode, "both">
     return ""
   }
 
-  return `<span class="segment__comment" data-segment-comment="${escapeAttribute(segment.segmentId)}">${escapeText(segment.comment)}</span>`
+  return `<span class="segment__comment" data-segment-comment="${escapeAttribute(segment.segmentId)}">${segment.comment}</span>`
 
 }
 
@@ -62,14 +62,15 @@ const renderText = (segment: Segment, language: Exclude<LanguageMode, "both">) =
 }
 
 const composeSegmentMarkup = (segment: Segment, language: Exclude<LanguageMode, "both">) => {
-  const idPrefix = language === "en" ? "en" : "pli"
+  const segmentId = escapeAttribute(segment.segmentId)
+  const elementId = language === "en" ? `en-${segmentId}` : `pli-${segmentId}` 
   const text = renderText(segment, language)
   const languageClassName = language === "en" ? "segment--en" : "segment--pli"
 
   return [
-    `<span class="segment ${languageClassName}" id="${idPrefix}-${escapeAttribute(segment.segmentId)}" data-segment="${escapeAttribute(segment.segmentId)}">`,
+    `<span class="segment ${languageClassName}" id="${elementId}" data-segment="${segmentId}">`,
+    renderReference(segmentId, elementId, escapeText(segment.segmentNumber)),
     `<span class="segment__text" lang="${language === "en" ? "en" : "pi"}"${language === "pli" ? ' translate="no"' : ""}>${text}</span>`,
-    renderReference(segment),
     renderComment(segment, language),
     "</span>"
   ].join("")

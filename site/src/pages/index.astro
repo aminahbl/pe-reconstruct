@@ -16,18 +16,31 @@ const NIKAYA_ID = "DN";
     <header class="site-header">
       <h1 class="site-title">Dīgha Nikāya Peyyāla Reconstructions</h1>
       <p class="site-description">
-        This is a demo presentation layer for composed Dīgha Nikāya texts with
-        peyyāla reconstructions outputted by the <a
+        This is a demo presentation layer for composed Dīgha Nikāya suttas with
+        <a
+          href="https://dpdict.net/?q=peyy%C4%81la"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i lang="pi">peyyāla</i>
+        </a> (abridged text) reconstructions outputted by the <a
           href="https://github.com/arkiuat/pe-reconstruct"
           target="_blank"
           rel="noopener noreferrer">arkiuat/pe-reconstruct</a
-        > utility. This project is a fork of the original repository that adds a simple
-        website interface for viewing the reconstructed texts. It does not develop
-        the reconstruction automation itself.
+        > utility. The source project is an experimental work in progress and the
+        reconstructed texts may contain errors.
+      </p>
+      <p class="site-description">
+        The original repository was forked to add a simple website interface for
+        viewing reconstructed texts and this project does not develop the
+        automation of
+        <i lang="pi">peyyāla</i> expansion itself. Please see the main project for
+        all textual and other information.
       </p>
     </header>
 
     <section class="index-main">
+      <h2 class="sutta-grid__title">Suttas</h2>
       <div class="sutta-grid">
         {
           suttas.map((sutta) => (
@@ -39,11 +52,10 @@ const NIKAYA_ID = "DN";
                 <p class="sutta-card__meta">
                   {NIKAYA_ID} {sutta.number}
                 </p>
-                <h2 class="sutta-card__title">{sutta.displayTitle}</h2>
-                <p class="sutta-card__body">
-                  {sutta.collectionTitle}
-                  {sutta.paliTitle ? ` · ${sutta.paliTitle}` : ""}
-                </p>
+                <h3 class="sutta-card__title">{sutta.displayTitle}</h3>
+                {sutta.paliTitle && (
+                  <p class="sutta-card__body">{sutta.paliTitle}</p>
+                )}
               </a>
             </article>
           ))
